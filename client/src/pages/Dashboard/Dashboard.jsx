@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Typography, Grid, Paper, Button, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux'; // Assuming user info is stored in Redux
+import { useSelector } from 'react-redux'; 
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import WorkIcon from '@mui/icons-material/Work';
 import PeopleIcon from '@mui/icons-material/People';
@@ -10,9 +10,8 @@ import SchoolIcon from '@mui/icons-material/School';
 import PersonIcon from '@mui/icons-material/Person';
 
 const Dashboard = () => {
-    const user = useSelector((state) => state.user); // Accessing user info from Redux
+    const user = useSelector((state) => state.auth.user); 
 
-    // Function to return dynamic greeting based on the time of day
     const getGreeting = () => {
         const hour = new Date().getHours();
         if (hour < 12) return 'Good Morning';
@@ -20,7 +19,6 @@ const Dashboard = () => {
         return 'Good Evening';
     };
 
-    // Reusable card component for cleaner code
     const ActionCard = ({ title, description, link, icon: Icon, color }) => (
         <Grid item xs={12} sm={6} md={4}>
             <Paper
@@ -60,7 +58,6 @@ const Dashboard = () => {
         </Grid>
     );
 
-    // Role-specific dashboard sections
     const renderAdminDashboard = () => (
         <Grid container spacing={4}>
             <ActionCard

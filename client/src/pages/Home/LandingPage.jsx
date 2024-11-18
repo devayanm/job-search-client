@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button, Container, Typography, Grid, Box } from '@mui/material';
 
 const LandingPage = () => {
@@ -83,23 +84,35 @@ const LandingPage = () => {
                 <Typography variant="h6" gutterBottom>
                     Ready to get started?
                 </Typography>
-                <Typography variant="body1" paragraph>
+                <Typography variant="body1" paragraph sx={{ mb: 3, color: 'text.secondary' }}>
                     Create an account or log in to access personalized recommendations, explore job opportunities, and streamline recruitment.
                 </Typography>
                 <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 3 }}>
                     <Button
+                        component={Link}
+                        to="/signup"
                         variant="contained"
                         color="primary"
                         size="large"
-                        sx={{ fontWeight: 'bold', px: 4 }}
+                        sx={{
+                            fontWeight: 'bold',
+                            px: 4,
+                            borderRadius: 2,
+                        }}
                     >
                         Sign Up
                     </Button>
                     <Button
+                        component={Link}
+                        to="/login"
                         variant="outlined"
                         color="secondary"
                         size="large"
-                        sx={{ fontWeight: 'bold', px: 4 }}
+                        sx={{
+                            fontWeight: 'bold',
+                            px: 4,
+                            borderRadius: 2,
+                        }}
                     >
                         Log In
                     </Button>

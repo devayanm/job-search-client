@@ -10,40 +10,48 @@ import Login from './pages/Auth/Login';
 
 const PrivateRoute = ({ children }) => {
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-    return isAuthenticated ? children : <Navigate to="/login" />;
+    return isAuthenticated ? children : <Navigate to="/" />;
 };
 
 const AppRoutes = () => {
+    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
     return (
-        <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/home" element={<Home />} />
-            <Route
-                path="/dashboard"
-                element={
-                    <PrivateRoute>
-                        <Dashboard />
-                    </PrivateRoute>
-                }
-            />
-            <Route
-                path="/jobs"
-                element={
-                    <PrivateRoute>
-                        <Jobs />
-                    </PrivateRoute>
-                }
-            />
-            <Route
-                path="/profile"
-                element={
-                    <PrivateRoute>
-                        <Profile />
-                    </PrivateRoute>
-                }
-            />
-        </Routes>
+        <>
+            <Routes>
+                {!isAuthenticated && <Route path="/" element={<LandingPage />} />}
+                {!isAuthenticated && <Route path="/login" element={<Login />} />}
+
+                <Route path="/home" element={<Home />} />
+
+                <Route
+                    path="/dashboard"
+                    element={
+                        <PrivateRoute>
+                            <Dashboard />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/jobs"
+                    element={
+                        <PrivateRoute>
+                            <Jobs />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/profile"
+                    element={
+                        <PrivateRoute>
+                            <Profile />
+                        </PrivateRoute>
+                    }
+                />
+
+                <Route path="*" element={<Navigate to={isAuthenticated ? "/dashboard" : "/"} />} />
+            </Routes>
+        </>
     );
 };
 

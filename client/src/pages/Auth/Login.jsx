@@ -12,8 +12,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Simulate authentication API response
-    const fakeUser = { email, name: 'John Doe', role: 'student' };
+    const fakeUser = { email, name: 'John Doe', role: 'admin' };
     dispatch(login(fakeUser));
     navigate('/dashboard');
   };
