@@ -24,8 +24,14 @@ const AppRoutes = () => {
                 {!isAuthenticated && <Route path="/login" element={<Login />} />}
                 {!isAuthenticated && <Route path="/register" element={<Register />} />}
 
-                <Route path="/home" element={<Home />} />
-
+                <Route
+                    path="/home"
+                    element={
+                        <PrivateRoute>
+                            <Home />
+                        </PrivateRoute>
+                    }
+                />
                 <Route
                     path="/dashboard"
                     element={
