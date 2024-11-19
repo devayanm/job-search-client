@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getUserProfile, updateUserProfile } from '../../services/api';
+import { userAPI } from '../../services/api';
+import { TextField, Button, CircularProgress, Alert, Box, Typography } from '@mui/material';
 
 const Profile = () => {
     const user = useSelector((state) => state.auth.user);
@@ -10,12 +11,17 @@ const Profile = () => {
         location: '',
     });
     const [isEditing, setIsEditing] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         if (user) {
-            getUserProfile(user.id)
+            setLoading(true);
+            userAPI
+                .getProfile(user.id)
                 .then((response) => setFormData(response.data))
-                .catch((error) => console.error('Error fetching profile:', error));
+                .catch((err) => setError('Error fetching profile: ' + err.message))
+                .finally(() => setLoading(false));
         }
     }, [user]);
 
@@ -26,59 +32,105 @@ const Profile = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (!formData.name || !formData.email || !formData.location) {
+            setError('All fields are required.');
+            return;
+        }
 
-        updateUserProfile(user.id, formData)
+        setLoading(true);
+        userAPI
+            .updateProfile(user.id, formData)
             .then(() => {
                 alert('Profile updated successfully!');
                 setIsEditing(false);
+                setError(null);
             })
-            .catch((error) => console.error('Error updating profile:', error));
+            .catch((err) => setError('Error updating profile: ' + err.message))
+            .finally(() => setLoading(false));
     };
 
     return (
-        <div>
-            <h2>Profile</h2>
+        <Box sx={{ p: 3 }}>
+            <Typography variant="h4" gutterBottom>
+                Profile
+            </Typography>
+
+            {loading && (
+                <Box display="flex" justifyContent="center" sx={{ my: 3 }}>
+                    <CircularProgress />
+                </Box>
+            )}
+
+            {error && (
+                <Alert severity="error" sx={{ my: 2 }}>
+                    {error}
+                </Alert>
+            )}
+
             {!isEditing ? (
-                <div>
-                    <p><strong>Name:</strong> {formData.name}</p>
-                    <p><strong>Email:</strong> {formData.email}</p>
-                    <p><strong>Location:</strong> {formData.location}</p>
-                    <button onClick={() => setIsEditing(true)}>Edit Profile</button>
-                </div>
+                <Box>
+                    <Typography variant="body1" sx={{ my: 1 }}>
+                        <strong>Name:</strong> {formData.name}
+                    </Typography>
+                    <Typography variant="body1" sx={{ my: 1 }}>
+                        <strong>Email:</strong> {formData.email}
+                    </Typography>
+                    <Typography variant="body1" sx={{ my: 1 }}>
+                        <strong>Location:</strong> {formData.location}
+                    </Typography>
+                    <Button
+                        variant="contained"
+                        onClick={() => setIsEditing(true)}
+                        sx={{ mt: 2 }}
+                    >
+                        Edit Profile
+                    </Button>
+                </Box>
             ) : (
                 <form onSubmit={handleSubmit}>
-                    <div>
-                        <label>Name:</label>
-                        <input
-                            type="text"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                    <div>
-                        <label>Email:</label>
-                        <input
-                            type="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                    <div>
-                        <label>Location:</label>
-                        <input
-                            type="text"
-                            name="location"
-                            value={formData.location}
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                    <button type="submit">Save</button>
-                    <button type="button" onClick={() => setIsEditing(false)}>Cancel</button>
+                    <TextField
+                        label="Name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        fullWidth
+                        variant="outlined"
+                        margin="normal"
+                    />
+                    <TextField
+                        label="Email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        fullWidth
+                        variant="outlined"
+                        margin="normal"
+                        type="email"
+                    />
+                    <TextField
+                        label="Location"
+                        name="location"
+                        value={formData.location}
+                        onChange={handleInputChange}
+                        fullWidth
+                        variant="outlined"
+                        margin="normal"
+                    />
+                    <Box display="flex" gap={2} sx={{ mt: 3 }}>
+                        <Button type="submit" variant="contained" color="primary">
+                            Save
+                        </Button>
+                        <Button
+                            variant="outlined"
+                            color="secondary"
+                            onClick={() => setIsEditing(false)}
+                        >
+                            Cancel
+                        </Button>
+                    </Box>
                 </form>
             )}
-        </div>
+        </Box>
     );
 };
 

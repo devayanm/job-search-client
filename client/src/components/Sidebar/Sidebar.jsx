@@ -17,7 +17,6 @@ const Sidebar = () => {
     <List>
       {links.map((link, index) => (
         <ListItem
-          button
           key={index}
           component={Link}
           to={link.path}

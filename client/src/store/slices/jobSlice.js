@@ -1,10 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchJobs as fetchJobsAPI } from "../../services/api";
+import { jobAPI } from "../../services/api";
 
-export const fetchJobs = createAsyncThunk("jobs/fetchJobs", async () => {
-  const response = await fetchJobsAPI();
-  return response.data;
-});
+export const fetchJobs = createAsyncThunk(
+  "jobs/fetchJobs",
+  async (_, thunkAPI) => {
+    try {
+      const response = await jobAPI.fetchJobs();
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data || error.message);
+    }
+  }
+);
 
 const jobSlice = createSlice({
   name: "jobs",
@@ -18,6 +25,7 @@ const jobSlice = createSlice({
     builder
       .addCase(fetchJobs.pending, (state) => {
         state.status = "loading";
+        state.error = null;
       })
       .addCase(fetchJobs.fulfilled, (state, action) => {
         state.status = "succeeded";
@@ -25,7 +33,8 @@ const jobSlice = createSlice({
       })
       .addCase(fetchJobs.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message;
+        state.error =
+          action.payload || "An error occurred while fetching jobs.";
       });
   },
 });

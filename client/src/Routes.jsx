@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import Jobs from './pages/Jobs/Jobs';
 import Profile from './pages/Profile/Profile';
 import Login from './pages/Auth/Login';
+import Register from './pages/Auth/Register';
 
 const PrivateRoute = ({ children }) => {
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -21,6 +22,7 @@ const AppRoutes = () => {
             <Routes>
                 {!isAuthenticated && <Route path="/" element={<LandingPage />} />}
                 {!isAuthenticated && <Route path="/login" element={<Login />} />}
+                {!isAuthenticated && <Route path="/register" element={<Register />} />}
 
                 <Route path="/home" element={<Home />} />
 

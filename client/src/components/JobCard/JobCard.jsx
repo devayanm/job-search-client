@@ -1,14 +1,21 @@
 import React from 'react';
+import { Card, CardContent, Typography, Button } from '@mui/material';
 
-const JobCard = ({ job }) => {
-  return (
-    <div style={{ border: '1px solid #ccc', margin: '10px', padding: '10px' }}>
-      <h3>{job.title}</h3>
-      <p>{job.description}</p>
-      <p><strong>Location:</strong> {job.location}</p>
-      <button>Apply</button>
-    </div>
-  );
-};
+const JobCard = ({ job }) => (
+  <Card sx={{ boxShadow: 3 }}>
+    <CardContent>
+      <Typography variant="h6">{job.title}</Typography>
+      <Typography variant="body2" color="textSecondary" sx={{ mb: 2 }}>
+        {job.company}
+      </Typography>
+      <Typography variant="body1" sx={{ mb: 1 }}>
+        {job.description}
+      </Typography>
+      <Button variant="contained" color="primary" size="small">
+        Apply Now
+      </Button>
+    </CardContent>
+  </Card>
+);
 
 export default JobCard;

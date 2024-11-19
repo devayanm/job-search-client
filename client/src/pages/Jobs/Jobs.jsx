@@ -1,39 +1,69 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchJobs } from '../../store/slices/jobSlice';
 import JobCard from '../../components/JobCard/JobCard';
-import { fetchJobs } from '../../services/api';
+import { CircularProgress, Alert, Box, Typography } from '@mui/material';
 
 const Jobs = () => {
-    const [jobs, setJobs] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const dispatch = useDispatch();
+    const { jobs, status, error } = useSelector((state) => state.jobs);
 
     useEffect(() => {
-        // Fetch job postings from the API using the fetchJobs function
-        const fetchJobListings = async () => {
-            try {
-                const response = await fetchJobs(); // Fetch job listings
-                setJobs(response.data); // Set the job data
-                setLoading(false); // Turn off loading
-            } catch (err) {
-                setError('Error fetching jobs'); // Handle error
-                setLoading(false); // Turn off loading
-            }
-        };
-
-        fetchJobListings();
-    }, []);
+        if (status === 'idle') {
+            dispatch(fetchJobs());
+        }
+    }, [dispatch, status]);
 
     return (
-        <div>
-            <h2>Job Listings</h2>
-            {loading && <p>Loading...</p>} {/* Show loading state */}
-            {error && <p>{error}</p>} {/* Show error message if any */}
-            {jobs.length === 0 && !loading ? (
-                <p>No jobs available</p>
-            ) : (
-                jobs.map((job) => <JobCard key={job.id} job={job} />)
+        <Box sx={{ p: 3 }}>
+            <Typography variant="h4" gutterBottom>
+                Job Listings
+            </Typography>
+
+            {status === 'loading' && (
+                <Box display="flex" justifyContent="center" alignItems="center" sx={{ mt: 5 }}>
+                    <CircularProgress />
+                </Box>
             )}
-        </div>
+
+            {status === 'failed' && (
+                <Alert severity="error" sx={{ mt: 2 }}>
+                    {error || 'An unexpected error occurred while fetching jobs.'}
+                </Alert>
+            )}
+
+            {status === 'succeeded' && jobs.length === 0 && (
+                <Box
+                    sx={{
+                        mt: 4,
+                        p: 3,
+                        textAlign: 'center',
+                        border: '1px dashed #ccc',
+                        borderRadius: '8px',
+                    }}
+                >
+                    <Typography variant="h6" color="textSecondary">
+                        No jobs available at the moment.
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary">
+                        Check back later for updates.
+                    </Typography>
+                </Box>
+            )}
+
+            {status === 'succeeded' && jobs.length > 0 && (
+                <Box
+                    display="grid"
+                    gridTemplateColumns="repeat(auto-fill, minmax(300px, 1fr))"
+                    gap={3}
+                    sx={{ mt: 3 }}
+                >
+                    {jobs.map((job) => (
+                        <JobCard key={job.id} job={job} />
+                    ))}
+                </Box>
+            )}
+        </Box>
     );
 };
 
