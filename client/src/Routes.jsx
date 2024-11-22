@@ -57,7 +57,7 @@ const AppRoutes = () => {
                     }
                 />
 
-                <Route path="*" element={<Navigate to={isAuthenticated ? "/dashboard" : "/"} />} />
+                <Route path="*" element={<Navigate to={isAuthenticated ? "/home" : "/"} />} />
             </Routes>
         </>
     );
