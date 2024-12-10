@@ -8,6 +8,7 @@ import Jobs from './pages/Jobs/Jobs';
 import Profile from './pages/Profile/Profile';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
+import Recommendations from './pages/Recommendations/Recommendations';
 
 const PrivateRoute = ({ children }) => {
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -56,7 +57,14 @@ const AppRoutes = () => {
                         </PrivateRoute>
                     }
                 />
-
+                <Route
+                    path="/recommendations"
+                    element={
+                        <PrivateRoute>
+                            <Recommendations />
+                        </PrivateRoute>
+                    }
+                />
                 <Route path="*" element={<Navigate to={isAuthenticated ? "/home" : "/"} />} />
             </Routes>
         </>
