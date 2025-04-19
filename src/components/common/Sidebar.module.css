@@ -1,0 +1,181 @@
+/* Sidebar Container */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-height: 100vh;
+    width: 250px;
+    background-color: #2f2f2f;
+    /* Dark, neutral background */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    /* Light shadow for depth */
+    transition: width 0.3s ease, background-color 0.3s ease;
+    padding: 2rem 1.5rem 1rem;
+    z-index: 1000;
+    color: #fff;
+    /* White text color for contrast */
+}
+
+/* Sidebar Collapsed */
+.collapsed {
+    width: 60px;
+    /* Reduced width for collapsed sidebar */
+}
+
+/* Sidebar Expanded */
+.expanded {
+    width: 250px;
+}
+
+/* Sidebar Header */
+.sidebar-header {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* Role Title */
+.role-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+/* Sidebar Toggle Button */
+.toggleBtn {
+    position: absolute;
+    top: 2rem;
+    right: -2rem;
+    background-color: #2f2f2f;
+    color: white;
+    padding: 1rem;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.toggleBtn:hover {
+    transform: scale(1.1);
+    background-color: #444;
+    /* Darker hover effect */
+}
+
+/* Nav Links Container */
+.nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+    margin-top: 1.5rem;
+}
+
+/* Individual Nav Links */
+.navLink {
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 1.1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    gap: 1.5rem;
+    position: relative;
+}
+
+/* Hover Effect for Nav Links */
+.navLink:hover {
+    background-color: #444;
+    /* Darker background on hover */
+    transform: translateX(10px);
+    /* Slide effect */
+}
+
+/* Active Link */
+.navLink.active {
+    background-color: #555;
+    /* Darker active background */
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Nav Icons */
+.icon {
+    font-size: 1.6rem;
+    /* Slightly larger icon size for better visibility */
+    transition: transform 0.3s ease;
+    color: #fff;
+}
+
+/* Icon Rotate on Hover */
+.navLink:hover .icon {
+    transform: rotate(15deg);
+}
+
+/* Nav Text */
+.linkText {
+    white-space: nowrap;
+    transition: opacity 0.3s ease;
+}
+
+/* Tooltip Styling */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltipText {
+    visibility: hidden;
+    width: 120px;
+    background-color: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 6px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.tooltip:hover .tooltipText {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        padding: 1rem 1rem;
+    }
+
+    .collapsed {
+        display: none;
+    }
+
+    .toggleBtn {
+        display: none;
+    }
+
+    .navLink {
+        padding: 0.8rem;
+        font-size: 1rem;
+    }
+
+    .roleTitle {
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+    }
+}
