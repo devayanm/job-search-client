@@ -1,0 +1,79 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django-specific
+*.log
+*.pot
+*.pyc
+*.pyo
+*.db
+*.sqlite3
+*.sqlite3-journal
+*.mo
+*.log
+
+# PostgreSQL dump files
+*.dump
+*.psql
+
+# ENV files
+.env
+.env.*
+
+# Django migration files
+**/migrations/*.py
+**/migrations/*.pyc
+!**/migrations/__init__.py
+
+# Media and static
+/media/
+staticfiles/
+static/
+
+# Local settings
+local_settings.py
+
+# Secret keys and credentials
+secrets.json
+config.json
+
+# Virtualenv
+venv/
+env/
+ENV/
+.venv/
+.virtualenv/
+*.egg-info/
+.eggs/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Testing
+.coverage
+.tox/
+nosetests.xml
+test_*.xml
+coverage.xml
+htmlcov/
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Backup files
+*.bak
+*.swp
+*.swo
+*.orig
