@@ -73,6 +73,26 @@ CORS_ALLOWED_ORIGINS = [
     "https://jobconnectplus.onrender.com",
 ]
 
+CORS_ALLOW_METHODS = [
+    "GET",
+    "POST",
+    "PUT",
+    "PATCH",
+    "DELETE",
+    "OPTIONS",
+]
+
+CORS_ALLOW_HEADERS = [
+    "content-type",
+    "accept",
+    "Authorization",
+    "X-Requested-With",
+    "Access-Control-Allow-Origin",  # Add this header to allow specific control
+]
+
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
