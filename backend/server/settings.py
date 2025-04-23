@@ -151,17 +151,17 @@ DATABASES = {
 }
 
 # For local development (if you're using a local .env file)
-if not os.environ.get('RENDER'):
-    DATABASES = {
-        'default': {
-            'ENGINE': os.environ.get('DATABASE_ENGINE'),
-            'NAME': os.environ.get('DATABASE_NAME'),
-            'USER': os.environ.get('DATABASE_USER'),
-            'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
-            'HOST': os.environ.get('DATABASE_HOST'),
-            'PORT': os.environ.get('DATABASE_PORT'),
-        }
-    }
+# if not os.environ.get('RENDER'):
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': os.environ.get('DATABASE_ENGINE'),
+#             'NAME': os.environ.get('DATABASE_NAME'),
+#             'USER': os.environ.get('DATABASE_USER'),
+#             'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
+#             'HOST': os.environ.get('DATABASE_HOST'),
+#             'PORT': os.environ.get('DATABASE_PORT'),
+#         }
+#     }
 
 
 # Password validation
@@ -206,7 +206,3 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# Production settings
-if os.environ.get('RENDER'):
-    DEBUG = False
