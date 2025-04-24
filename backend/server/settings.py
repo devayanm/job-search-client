@@ -29,7 +29,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1', 'job-search-client.onrender.com'])
 
 # Application definition
 
@@ -141,28 +141,26 @@ EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-# For production (Render)
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL'),
-        conn_max_age=600,
+    'default': {
+        'ENGINE': os.environ.get('DATABASE_ENGINE'),
+        'NAME': os.environ.get('DATABASE_NAME'),
+        'USER': os.environ.get('DATABASE_USER'),
+        'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
+        'HOST': os.environ.get('DATABASE_HOST'),
+        'PORT': os.environ.get('DATABASE_PORT'),
+    }
+}
+
+# DATABASES["default"] = dj_database_url.parse("postgresql://devayan:JX0hPPe9qYWAIS22BGh2FORJiI7N79Nt@dpg-d04loi49c44c739p1v70-a/job_portal_1ac6")
+
+DATABASES = {
+    "default": dj_database_url.parse(
+        os.environ.get("DATABASE_URL"), 
+        conn_max_age=600, 
         ssl_require=True
     )
 }
-
-# For local development (if you're using a local .env file)
-# if not os.environ.get('RENDER'):
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': os.environ.get('DATABASE_ENGINE'),
-#             'NAME': os.environ.get('DATABASE_NAME'),
-#             'USER': os.environ.get('DATABASE_USER'),
-#             'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
-#             'HOST': os.environ.get('DATABASE_HOST'),
-#             'PORT': os.environ.get('DATABASE_PORT'),
-#         }
-#     }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
