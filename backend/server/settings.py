@@ -14,6 +14,7 @@ import dj_database_url
 from pathlib import Path
 import environ
 from datetime import timedelta
+from corsheaders.defaults import default_headers
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -56,6 +57,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -63,7 +65,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'server.urls'
@@ -82,16 +83,10 @@ CORS_ALLOW_METHODS = [
     "OPTIONS",
 ]
 
-CORS_ALLOW_HEADERS = [
-    "content-type",
-    "accept",
-    "Authorization",
-    "X-Requested-With",
-    "Access-Control-Allow-Origin",  # Add this header to allow specific control
-]
+CORS_ALLOW_HEADERS = list(default_headers)
 
 CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ORIGIN_ALLOW_ALL = True
 
 TEMPLATES = [
     {
